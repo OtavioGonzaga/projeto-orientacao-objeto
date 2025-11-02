@@ -3,6 +3,11 @@ package br.edu.utf.project.model;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,6 +35,7 @@ public class UserModel {
 	private String name;
 
 	@Column(nullable = false, length = 255)
+	@JsonIgnore
 	private String password;
 
 	@Column(nullable = false, unique = true, length = 255)
@@ -48,4 +54,11 @@ public class UserModel {
 		this.updatedAt = LocalDateTime.now();
 	}
 
+	public UserDetails toUserDetails() {
+		return User.builder()
+				.username(this.email)
+				.password(this.password != null ? this.password : "")
+				.roles("USER")
+				.build();
+	}
 }

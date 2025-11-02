@@ -29,11 +29,19 @@ public class UserController {
 	private final UserService userService;
 
 	@GetMapping
-	public List<UserModel> getAll() {
-		return userService.findAll();
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200"),
+	})
+	public ResponseEntity<List<UserModel>> getAll() {
+		return ResponseEntity.ok(userService.findAll());
 	}
 
 	@GetMapping("/{id}")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200"),
+			@ApiResponse(responseCode = "400", description = "Corpo da requisição inválido"),
+			@ApiResponse(responseCode = "409", description = "Usuário já existe")
+	})
 	public ResponseEntity<UserModel> getById(@PathVariable UUID id) {
 		return userService.findById(id)
 				.map(ResponseEntity::ok)
@@ -41,11 +49,21 @@ public class UserController {
 	}
 
 	@PostMapping
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "201", description = "Usuário registrado com sucesso"),
+			@ApiResponse(responseCode = "400", description = "Corpo da requisição inválido"),
+			@ApiResponse(responseCode = "409", description = "Já existe um usuário com esse e-mail"),
+	})
 	public ResponseEntity<UserModel> create(@RequestBody @Valid CreateUserDTO createUserDTO) {
 		return ResponseEntity.ok(userService.save(createUserDTO));
 	}
 
 	@PutMapping("/{id}")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Usuário editado com sucesso"),
+			@ApiResponse(responseCode = "400", description = "Corpo da requisição inválido"),
+			@ApiResponse(responseCode = "404", description = "Usuário não encontrado para o id informado"),
+	})
 	public ResponseEntity<UserModel> update(@PathVariable UUID id, @RequestBody UserModel user) {
 		return userService.update(id, user)
 				.map(ResponseEntity::ok)
@@ -54,7 +72,7 @@ public class UserController {
 
 	@DeleteMapping("/{id}")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "204", description  = "Usuário deletado com sucesso"),
+			@ApiResponse(responseCode = "204", description = "Usuário deletado com sucesso"),
 			@ApiResponse(responseCode = "404", description = "Usuário não encontrado")
 	})
 	public ResponseEntity<Void> delete(@PathVariable UUID id) {

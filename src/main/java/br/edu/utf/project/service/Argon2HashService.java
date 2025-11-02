@@ -7,17 +7,17 @@ import org.springframework.stereotype.Service;
 @Service("argon2")
 public class Argon2HashService implements HashService {
 
-	private static int saltLength = 16; // 16 bytes
-	private static int hashLength = 32; // 32 bytes
-	private static int parallelism = 1; // 1 thread
-	private static int memory = 65536; // 64 MB
-	private static int iterations = 3; // 3 passes
+	private static final int SALT_LENGTH = 16; // 16 bytes
+	private static final int HASH_LENGTH = 32; // 32 bytes
+	private static final int PARALLELISM = 1; // 1 thread
+	private static final int MEMORY = 65536; // 64 MB
+	private static final int ITERATIONS = 3; // 3 passes
 
 	private final PasswordEncoder encoder;
 
 	public Argon2HashService() {
 		this.encoder = new Argon2PasswordEncoder(
-				saltLength, hashLength, parallelism, memory, iterations);
+				SALT_LENGTH, HASH_LENGTH, PARALLELISM, MEMORY, ITERATIONS);
 	}
 
 	@Override
