@@ -6,7 +6,7 @@
       "name": "Spring Boot",
       "request": "launch",
       "mainClass": "br.edu.utf.project.ProjectApplication",
-      "envFile": "${workspaceFolder}/.env"
+      "envFile": "${workspaceFolder}/.env" 
     }
   ]
 }
