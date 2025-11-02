@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.utf.project.dto.CreateUserDTO;
 import br.edu.utf.project.model.UserModel;
 import br.edu.utf.project.service.UserService;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -37,8 +41,8 @@ public class UserController {
 	}
 
 	@PostMapping
-	public ResponseEntity<UserModel> create(@RequestBody UserModel user) {
-		return ResponseEntity.ok(userService.save(user));
+	public ResponseEntity<UserModel> create(@RequestBody @Valid CreateUserDTO createUserDTO) {
+		return ResponseEntity.ok(userService.save(createUserDTO));
 	}
 
 	@PutMapping("/{id}")
@@ -49,6 +53,10 @@ public class UserController {
 	}
 
 	@DeleteMapping("/{id}")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "204", description  = "Usuário deletado com sucesso"),
+			@ApiResponse(responseCode = "404", description = "Usuário não encontrado")
+	})
 	public ResponseEntity<Void> delete(@PathVariable UUID id) {
 		boolean deleted = userService.delete(id);
 

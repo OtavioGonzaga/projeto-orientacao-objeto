@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import br.edu.utf.project.dto.CreateUserDTO;
 import br.edu.utf.project.model.UserModel;
 import br.edu.utf.project.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
 	private final UserRepository userRepository;
+	@Qualifier("argon2")
+	private final HashService hashService;
 
 	public List<UserModel> findAll() {
 		return userRepository.findAll();
@@ -24,7 +28,11 @@ public class UserService {
 		return userRepository.findById(id);
 	}
 
-	public UserModel save(UserModel user) {
+	public UserModel save(CreateUserDTO createUserDTO) {
+		UserModel user = createUserDTO.toEntity();
+
+		user.setPassword(hashService.cypherString(user.getPassword()));
+
 		return userRepository.save(user);
 	}
 
@@ -40,7 +48,9 @@ public class UserService {
 	public boolean delete(UUID id) {
 		if (!userRepository.existsById(id))
 			return false;
+
 		userRepository.deleteById(id);
+
 		return true;
 	}
 }
