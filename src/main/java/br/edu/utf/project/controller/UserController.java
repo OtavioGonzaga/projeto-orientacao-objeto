@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.utf.project.decorator.UserId;
 import br.edu.utf.project.dto.CreateUserDTO;
 import br.edu.utf.project.model.UserModel;
 import br.edu.utf.project.service.UserService;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
@@ -34,6 +36,14 @@ public class UserController {
 	})
 	public ResponseEntity<List<UserModel>> getAll() {
 		return ResponseEntity.ok(userService.findAll());
+	}
+
+	@GetMapping("profile")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200"),
+	})
+	public ResponseEntity<UserModel> getProfile(@Parameter(hidden = true) @UserId UUID id) {
+		return ResponseEntity.ok(userService.findByIdOrFail(id));
 	}
 
 	@GetMapping("/{id}")

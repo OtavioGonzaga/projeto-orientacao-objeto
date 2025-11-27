@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
@@ -42,7 +43,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 			try {
 				String subject = jwtService.getSubject(token);
 
-				UserModel userModel = userService.findByIdOrFail(subject);
+				UserModel userModel = userService.findByIdOrFail(UUID.fromString(subject));
 				UserDetails userDetails = userModel.toUserDetails();
 
 				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(

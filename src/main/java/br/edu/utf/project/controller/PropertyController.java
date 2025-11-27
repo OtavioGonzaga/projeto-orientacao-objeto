@@ -8,12 +8,17 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.utf.project.decorator.UserId;
+import br.edu.utf.project.dto.CreatePropertyDTO;
 import br.edu.utf.project.model.PropertyModel;
 import br.edu.utf.project.service.PropertyService;
+import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -36,8 +41,15 @@ public class PropertyController {
     }
 
     @PostMapping
-    public ResponseEntity<PropertyModel> create(@RequestBody PropertyModel property) {
-        return ResponseEntity.ok(propertyService.save(property));
+    public ResponseEntity<PropertyModel> create(@Parameter(hidden = true) @UserId UUID ownerId,
+            @Valid @RequestBody CreatePropertyDTO property) {
+        return ResponseEntity.ok(propertyService.create(ownerId, property));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PropertyModel> update(@Parameter(hidden = true) @UserId UUID ownerId, @PathVariable UUID id,
+            @Valid @RequestBody CreatePropertyDTO property) {
+        return ResponseEntity.ok(propertyService.update(id, ownerId, property));
     }
 
     @DeleteMapping("/{id}")

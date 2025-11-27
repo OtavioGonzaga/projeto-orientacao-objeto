@@ -31,8 +31,8 @@ public class UserService {
 		return userRepository.findById(id);
 	}
 
-	public UserModel findByIdOrFail(@NonNull String id) {
-		return this.findById(UUID.fromString(id))
+	public UserModel findByIdOrFail(@NonNull UUID id) {
+		return this.findById(id)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
 	}
 

@@ -8,8 +8,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.edu.utf.project.enums.UserRole;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -41,6 +44,10 @@ public class UserModel {
 	@Column(nullable = false, unique = true, length = 255)
 	private String email;
 
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "user_role")
+    private UserRole role = UserRole.USER;
+
 	@Column(name = "created_at", nullable = false, updatable = false)
 	@Builder.Default()
 	private LocalDateTime createdAt = LocalDateTime.now();
@@ -58,7 +65,7 @@ public class UserModel {
 		return User.builder()
 				.username(this.email)
 				.password(this.password != null ? this.password : "")
-				.roles("USER")
+				.roles(this.role.name())
 				.build();
 	}
 }
