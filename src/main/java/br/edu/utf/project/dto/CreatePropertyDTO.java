@@ -21,6 +21,10 @@ public class CreatePropertyDTO {
 	@Size(min = 3, max = 255, message = "O título deve ter entre 3 e 255 caracteres")
 	private String title;
 
+	@NotBlank(message = "A url da imagem é obrigatório")
+	@Size(min = 3, max = 255, message = "O título deve ter entre 3 e 255 caracteres")
+	private String imageUrl;
+
 	@NotNull(message = "A diária é obrigatória")
 	@DecimalMin(value = "0.0", inclusive = false, message = "A diária deve ser maior que zero")
 	private BigDecimal dailyRate;
@@ -32,6 +36,7 @@ public class CreatePropertyDTO {
 		return PropertyModel.builder()
 				.title(this.title)
 				.dailyRate(this.dailyRate)
+				.imageUrl(this.imageUrl)
 				.description(this.description)
 				.build();
 	}
@@ -43,6 +48,8 @@ public class CreatePropertyDTO {
 			property.setDailyRate(dailyRate);
 		if (description != null)
 			property.setDescription(description);
+		if (imageUrl != null)
+			property.setImageUrl(imageUrl);
 
 		if (address != null && property.getAddress() != null) {
 			address.applyTo(property.getAddress());

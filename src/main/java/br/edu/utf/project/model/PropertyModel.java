@@ -53,6 +53,9 @@ public class PropertyModel {
     @Column(nullable = false)
     private String title;
 
+    @Column(nullable = false)
+    private String imageUrl;
+
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal dailyRate;
 

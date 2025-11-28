@@ -44,10 +44,10 @@ public class UserModel {
 	@Column(nullable = false, unique = true, length = 255)
 	private String email;
 
-    @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "user_role")
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
 	@Builder.Default()
-    private UserRole role = UserRole.USER;
+	private UserRole role = UserRole.USER;
 
 	@Column(name = "created_at", nullable = false, updatable = false)
 	@Builder.Default()
