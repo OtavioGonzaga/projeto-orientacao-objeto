@@ -46,6 +46,7 @@ public class UserModel {
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "user_role")
+	@Builder.Default()
     private UserRole role = UserRole.USER;
 
 	@Column(name = "created_at", nullable = false, updatable = false)
