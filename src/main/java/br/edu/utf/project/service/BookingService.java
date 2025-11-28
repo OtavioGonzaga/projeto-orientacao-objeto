@@ -29,7 +29,7 @@ public class BookingService {
 
 	public BookingModel findById(UUID id) {
 		return bookingRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("Reserva não encontrada"));
+				.orElseThrow(() -> new RuntimeException("Booking not found"));
 	}
 
 	public BookingModel createBooking(UUID userId, CreateBookingDTO dto) {
@@ -37,7 +37,7 @@ public class BookingService {
 		validateDates(dto.getStartDate(), dto.getEndDate());
 
 		PropertyModel property = propertyRepository.findById(dto.getPropertyId())
-				.orElseThrow(() -> new RuntimeException("Imóvel não encontrado"));
+				.orElseThrow(() -> new RuntimeException("Property not found"));
 
 		int days = dto.getEndDate().compareTo(dto.getStartDate());
 		BigDecimal totalPrice = BigDecimal.valueOf(property.getDailyRate().floatValue() * days);
@@ -57,14 +57,14 @@ public class BookingService {
 		validateDates(dto.getStartDate(), dto.getEndDate());
 
 		BookingModel booking = bookingRepository.findById(bookingId)
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Reserva não encontrada"));
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Booking not found"));
 
 		if (!booking.getUserId().equals(userId)) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Acesso negado à reserva");
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You don't have permission to update this booking");
 		}
 
 		PropertyModel property = propertyRepository.findById(dto.getPropertyId())
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Imóvel não encontrado"));
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Property not found"));
 
 		booking.setStartDate(dto.getStartDate());
 		booking.setEndDate(dto.getEndDate());
@@ -86,7 +86,7 @@ public class BookingService {
 	private void validateDates(LocalDate start, LocalDate end) {
 		if (end.isBefore(start)) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-					"A data final deve ser posterior à data inicial");
+					"End date must be after start date");
 		}
 	}
 }

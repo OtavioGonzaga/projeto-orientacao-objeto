@@ -10,14 +10,14 @@ import lombok.Data;
 @Data
 public class CreateBookingDTO {
 
-    @NotNull(message = "O ID do imóvel é obrigatório")
+    @NotNull(message = "ID is required")
     private UUID propertyId;
 
-    @NotNull(message = "A data inicial é obrigatória")
-    @FutureOrPresent(message = "A data inicial deve ser hoje ou no futuro")
+    @NotNull(message = "Initial date is required")
+    @FutureOrPresent(message = "The initial date must be today or in the future")
     private LocalDate startDate;
 
-    @NotNull(message = "A data final é obrigatória")
-    @FutureOrPresent(message = "A data final deve ser hoje ou no futuro")
+    @NotNull(message = "End date is required")
+    @FutureOrPresent(message = "The end date must be today or in the future")
     private LocalDate endDate;
 }

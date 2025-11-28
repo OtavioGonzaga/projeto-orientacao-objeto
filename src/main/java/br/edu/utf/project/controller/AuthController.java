@@ -28,8 +28,8 @@ public class AuthController {
     @PostMapping("/login")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200"),
-        @ApiResponse(responseCode = "400", description = "Corpo da requisição inválido"),
-        @ApiResponse(responseCode = "401", description = "E-mail ou senha incorretos")
+            @ApiResponse(responseCode = "400", description = "Invalid request body"),
+            @ApiResponse(responseCode = "401", description = "Incorrect email or password")
     })
     public ResponseEntity<AuthResponseDTO> login(@RequestBody @Valid LoginDTO loginDTO) {
         AuthResponseDTO authResponseDTO = this.authService.login(loginDTO);
@@ -39,9 +39,9 @@ public class AuthController {
 
     @PostMapping("/refresh-token")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Usuário registrado com sucesso"),
-        @ApiResponse(responseCode = "400", description = "Corpo da requisição inválido"),
-        @ApiResponse(responseCode = "409", description = "User already exists")
+           @ApiResponse(responseCode = "201", description = "User successfully registered"),
+           @ApiResponse(responseCode = "400", description = "Invalid request body"),
+           @ApiResponse(responseCode = "409", description = "User already exists")
     })
     public ResponseEntity<AuthResponseDTO> refreshToken(@RequestBody @Valid RefreshRequestDTO refreshRequestDTO) {
         AuthResponseDTO authResponseDto = this.authService.refreshToken(refreshRequestDTO.getRefreshToken());
@@ -51,9 +51,9 @@ public class AuthController {
 
     @PostMapping("/register")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Usuário registrado com sucesso"),
-        @ApiResponse(responseCode = "400", description = "Corpo da requisição inválido"),
-        @ApiResponse(responseCode = "409", description = "User already exists")
+           @ApiResponse(responseCode = "201", description = "User successfully registered"),
+           @ApiResponse(responseCode = "400", description = "Invalid request body"),
+           @ApiResponse(responseCode = "409", description = "User already exists")
     })
     public ResponseEntity<UserModel> register(@Valid @RequestBody CreateUserDTO createUserDTO) {
         UserModel user = this.authService.register(createUserDTO);

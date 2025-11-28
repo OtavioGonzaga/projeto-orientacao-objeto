@@ -36,7 +36,7 @@ public class UserIdResolver implements HandlerMethodArgumentResolver {
 		String authHeader = webRequest.getHeader("Authorization");
 
 		if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Token JWT ausente ou inválido");
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Token not provided or invalid");
 		}
 
 		String token = authHeader.substring(7);

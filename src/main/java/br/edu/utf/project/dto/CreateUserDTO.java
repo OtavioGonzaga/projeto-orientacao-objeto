@@ -9,17 +9,17 @@ import lombok.Data;
 @Data
 public class CreateUserDTO {
 
-    @NotBlank(message = "O nome é obrigatório")
-    @Size(min = 3, max = 255, message = "O nome deve ter entre 3 e 255 caracteres")
+    @NotBlank(message = "Name is required")
+    @Size(min = 3, max = 255, message = "Name must be between 3 and 255 characters")
     private String name;
 
-    @NotBlank(message = "A senha é obrigatória")
-    @Size(min = 8, max = 255, message = "A senha deve ter entre 8 e 255 caracteres")
+    @NotBlank(message = "Password is required")
+    @Size(min = 8, max = 255, message = "Password must be between 8 and 255 characters")
     private String password;
 
-    @NotBlank(message = "O email é obrigatório")
-    @Email(message = "Email inválido")
-    @Size(max = 255, message = "O email deve ter no máximo 255 caracteres")
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email format")
+    @Size(max = 255, message = "Email must be at most 255 characters")
     private String email;
 
     public UserModel toEntity() {

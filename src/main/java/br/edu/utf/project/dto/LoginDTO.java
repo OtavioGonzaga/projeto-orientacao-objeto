@@ -8,11 +8,11 @@ import lombok.Data;
 @Data
 public class LoginDTO {
 
-	@NotBlank(message = "O email é obrigatório")
-	@Email(message = "Email inválido")
-	@Size(max = 255, message = "O email deve ter no máximo 255 caracteres")
+	@NotBlank(message = "Email is required")
+	@Email(message = "Invalid email format")
+	@Size(max = 255, message = "Email must be at most 255 characters")
 	private String email;
 
-	@NotBlank(message = "A senha é obrigatória")
+	@NotBlank(message = "Password is required")
 	private String password;
 }

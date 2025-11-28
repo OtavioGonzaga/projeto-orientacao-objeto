@@ -24,7 +24,7 @@ public class AuthService {
 		boolean isPasswordCorrect = hashService.compareString(loginDTO.getPassword(), user.getPassword());
 
 		if (!isPasswordCorrect) {
-			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "E-mail ou senha incorretos");
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
 		}
 
 		String token = jwtService.generateToken(
@@ -43,7 +43,7 @@ public class AuthService {
 		try {
 			userId = jwtService.getSubject(refreshToken);
 		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Refresh token inválido");
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid refresh token");
 		}
 
 		String token = jwtService.generateToken(userId,

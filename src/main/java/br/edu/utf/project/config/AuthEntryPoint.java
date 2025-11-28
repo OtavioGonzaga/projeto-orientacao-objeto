@@ -18,6 +18,6 @@ public class AuthEntryPoint implements AuthenticationEntryPoint {
 
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");
-        response.getWriter().write("{\"error\":\"Acesso negado\"}");
+        response.getWriter().write("{\"error\":\"Access denied\"}");
     }
 }

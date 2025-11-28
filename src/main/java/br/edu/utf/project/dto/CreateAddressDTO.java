@@ -8,28 +8,28 @@ import lombok.Data;
 @Data
 public class CreateAddressDTO {
 
-	@NotBlank(message = "A rua é obrigatória")
-	@Size(max = 255, message = "A rua deve ter no máximo 255 caracteres")
+	@NotBlank(message = "Street is required")
+	@Size(max = 255, message = "The street must be at most 255 characters")
 	private String street;
 
-	@NotBlank(message = "O número é obrigatório")
-	@Size(max = 50, message = "O número deve ter no máximo 50 caracteres")
+	@NotBlank(message = "Number is required")
+	@Size(max = 50, message = "The number must be at most 50 characters")
 	private String number;
 
-	@NotBlank(message = "A cidade é obrigatória")
-	@Size(max = 255, message = "A cidade deve ter no máximo 255 caracteres")
+	@NotBlank(message = "City is required")
+	@Size(max = 255, message = "The city must be at most 255 characters")
 	private String city;
 	
-	@NotBlank(message = "O estado é obrigatório")
-	@Size(max = 2, message = "O estado deve ter exatamente 2 caracteres (sigla)")
+	@NotBlank(message = "State is required")
+	@Size(max = 2, message = "The state must be at most 2 characters")
 	private String state;
 	
-	@NotBlank(message = "O país é obrigatório")
-	@Size(max = 255, message = "A cidade deve ter no máximo 255 caracteres")
+	@NotBlank(message = "Country is required")
+	@Size(max = 255, message = "The country must be at most 255 characters")
 	private String country;
 
-	@NotBlank(message = "O CEP é obrigatório")
-	@Size(min = 8, max = 8, message = "CEP deve estar no formato 00000000")
+	@NotBlank(message = "CEP is required")
+	@Size(min = 8, max = 8, message = "The zip code must be 8 characters")
 	private String zipCode;
 
 	public AddressModel toEntity() {
